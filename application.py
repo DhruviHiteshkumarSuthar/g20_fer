@@ -21,10 +21,10 @@ model = tf.keras.models.load_model("emotion_model.h5")
 emotion_labels = ['Angry', 'Disgust', 'Fear', 'Happy', 'Neutral', 'Sad', 'Surprise']
 
 # ---------------------------
-# 2. Create a Flask server and configure CORS
+# 2. Create a Flask application and configure CORS
 # ---------------------------
-server = Flask(__name__)
-CORS(server)
+application = Flask(__name__)
+CORS(application)
 
 # Global variable to store prediction history
 max_history = 10
@@ -34,7 +34,7 @@ prediction_history = {label: [0] * max_history for label in emotion_labels}
 # ---------------------------
 # 3. Define the /predict API endpoint
 # ---------------------------
-@server.route("/predict", methods=["POST"])
+@application.route("/predict", methods=["POST"])
 def predict():
     try:
         data = request.json
@@ -71,11 +71,11 @@ def predict():
         return jsonify({"error": str(e)}), 500
 
 # ---------------------------
-# 4. Create a Dash app using the Flask server
+# 4. Create a Dash app using the Flask application
 # ---------------------------
 external_stylesheets = [dbc.themes.BOOTSTRAP]
 app = Dash(__name__,
-           server=server,
+           server=application,
            url_base_pathname='/dashboard/',
            external_stylesheets=external_stylesheets)
 
@@ -194,7 +194,7 @@ app.clientside_callback(
 )
 
 # ---------------------------
-# 7. Server-side callback: Update the graphs
+# 7. application-side callback: Update the graphs
 # ---------------------------
 @app.callback(
     [Output('emotion-line-chart', 'figure'),
@@ -269,9 +269,13 @@ def update_graphs(n_intervals):
 
     return line_fig, pie_fig, heatmap_fig
 
+@application.route("/")
+def home():
+    return "Emotion Recognition App is Running!"
+
 # ---------------------------
 # 8. Run the app
 # ---------------------------
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
-    server.run(host="0.0.0.0", port=port, debug=True)
+    application.run(host="0.0.0.0", port=port, debug=True)
