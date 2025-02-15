@@ -1,8 +1,9 @@
-name: fusion.webapi
+name: fer_docker_image_deployment
 
 on:
   push:
-    - main
+    branches:
+      - main
 
 jobs:
   build_and_deploy:
@@ -14,8 +15,8 @@ jobs:
       
       - name: Set up Git
         run: |
-          git config user.name ""
-          git config user.email "info@upvision.in"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
       
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v2
@@ -31,26 +32,25 @@ jobs:
           tags: |
             ghcr.io/${{ github.repository }}:latest
             ghcr.io/${{ github.repository }}:backup-${{ github.run_id }}
-          context: ./fusion.webapi
-          file: ./fusion.webapi/webapi/Dockerfile
+          file: ./Dockerfile
       
       - name: Send Slack Notification (Always)
         if: always()
         run: |
-          chmod +x fusion.deployment/send_slack_notification.sh
+          chmod +x deployment/send_slack_notification.sh
           if [ "${{ job.status }}" == "success" ]; then
             COMMIT_URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/commit/${GITHUB_SHA}"
-            TITLE="Fusion WebAPI Docker Image Pushed Successfully."
+            TITLE="FER Docker Image Pushed Successfully."
             MESSAGE="The Docker Image has been successfully built and pushed to the GitHub Container Registry."
             STATUS="success"
             DESCRIPTION="The Docker Image has been successfully built and pushed to the GitHub Container Registry.\nClick <${COMMIT_URL}|here> to view the current changes.\nDeployment to the server will start shortly."
           else
             COMMIT_URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/commit/${GITHUB_SHA}"
-            TITLE="Fusion WebAPI Docker Image Push Failed"
+            TITLE="FER Docker Image Push Failed"
             MESSAGE="The Docker Image has not been built and pushed. Please check."
             STATUS="failure"
             DESCRIPTION="The Docker Image could not be build and pushed to the GitHub Container Registry. The deployment of latest image to the server impacted. Please check <${COMMIT_URL}|here>."
           fi
-          SOURCE="https://github.com/upvision-in/fusion/blob/main/.github/workflows/fusion.webapi.yml"
-          fusion.deployment/send_slack_notification.sh "<$SOURCE|fusion.webapi.yml>" "$STATUS" "$TITLE" "$MESSAGE" "$DESCRIPTION" "📦"
+          SOURCE="https://github.com/DhruviHiteshkumarSuthar/FER_FLASK/blob/main/.github/workflows/image_deployment.yml"
+          fusion.deployment/send_slack_notification.sh "<$SOURCE|image_deployment.yml>" "$STATUS" "$TITLE" "$MESSAGE" "$DESCRIPTION" "📦"
         shell: bash
