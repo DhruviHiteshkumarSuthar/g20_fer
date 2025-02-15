@@ -15,8 +15,8 @@ jobs:
       
       - name: Set up Git
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "DhruviHiteshkumarSuthar"
+          git config user.email "dhruvihsuthar21@gnu.ac.in"
       
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v2
