@@ -52,5 +52,5 @@ jobs:
             DESCRIPTION="The Docker Image could not be build and pushed to the GitHub Container Registry. The deployment of latest image to the server impacted. Please check <${COMMIT_URL}|here>."
           fi
           SOURCE="https://github.com/DhruviHiteshkumarSuthar/FER_FLASK/blob/main/.github/workflows/image_deployment.yml"
-          fusion.deployment/send_slack_notification.sh "<$SOURCE|image_deployment.yml>" "$STATUS" "$TITLE" "$MESSAGE" "$DESCRIPTION" "📦"
+          deployment/send_slack_notification.sh "<$SOURCE|image_deployment.yml>" "$STATUS" "$TITLE" "$MESSAGE" "$DESCRIPTION" "📦"
         shell: bash
