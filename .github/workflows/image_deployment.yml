@@ -30,8 +30,8 @@ jobs:
         with:
           push: true
           tags: |
-            ghcr.io/${{ github.repository }}:latest
-            ghcr.io/${{ github.repository }}:backup-${{ github.run_id }}
+            ghcr.io/ferg20:latest
+            ghcr.io/ferg20:backup-${{ github.run_id }}
           file: ./Dockerfile
       
       - name: Send Slack Notification (Always)
