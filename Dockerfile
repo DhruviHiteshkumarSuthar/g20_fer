@@ -11,6 +11,7 @@ WORKDIR /app
 COPY requirements.txt ./
 COPY application.py ./
 COPY assets/ ./assets/
+COPY templates/ ./templates/
 COPY emotion_model.h5 ./
 
 # Install dependencies
