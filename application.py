@@ -4,7 +4,7 @@ import numpy as np
 import tensorflow as tf
 import base64
 import logging
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 
 from dash import Dash, dcc, html, Input, Output
@@ -81,13 +81,13 @@ app = Dash(__name__,
 
 # Define a darker blue color palette for chart elements.
 dark_blue_palette = [
-    '#0d3b66',  # Dark blue
-    '#115173',
+    '#0d3b66',  # Dark Blue (Start)
+    '#0f4a75',
+    '#125583',
     '#16688b',
     '#1a7fa0',
-    '#1e89b2',
-    '#2393c4',
-    '#279dc6'
+    '#1c84a8',
+    '#1e6f9f'
 ]
 
 # Set the chart background to white.
@@ -271,7 +271,7 @@ def update_graphs(n_intervals):
 
 @application.route("/")
 def home():
-    return "Emotion Recognition App is Running!"
+    return render_template("index.html")
 
 # ---------------------------
 # 8. Run the app
