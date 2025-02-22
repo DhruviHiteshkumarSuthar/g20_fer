@@ -40,16 +40,18 @@ jobs:
           if [ "${{ job.status }}" == "success" ]; then
             COMMIT_URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/commit/${GITHUB_SHA}"
             TITLE="FER Docker Image Pushed Successfully."
-            MESSAGE="The Docker Image has been successfully built and pushed to the GitHub Container Registry."
+            MESSAGE="The Docker Image has been successfully built and pushed to the Docker Hub."
             STATUS="success"
-            DESCRIPTION="The Docker Image has been successfully built and pushed to the GitHub Container Registry.\nClick <${COMMIT_URL}|here> to view the current changes.\nDeployment to the server will start shortly."
+            EMOJI="📦"
+            DESCRIPTION="The Docker Image has been successfully built and pushed to the Docker Hub.\nClick <${COMMIT_URL}|here> to view the current changes.\nDeployment to the server will start shortly."
           else
             COMMIT_URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/commit/${GITHUB_SHA}"
             TITLE="FER Docker Image Push Failed"
             MESSAGE="The Docker Image has not been built and pushed. Please check."
             STATUS="failure"
-            DESCRIPTION="The Docker Image could not be build and pushed to the GitHub Container Registry. The deployment of latest image to the server impacted. Please check <${COMMIT_URL}|here>."
+            EMOJI="🔥"
+            DESCRIPTION="The Docker Image could not be build and pushed to the Docker Hub. The deployment of latest image to the server impacted. Please check <${COMMIT_URL}|here>."
           fi
-          SOURCE="https://github.com/DhruviHiteshkumarSuthar/FER_FLASK/blob/main/.github/workflows/image_deployment.yml"
-          deployment/send_slack_notification.sh "<$SOURCE|image_deployment.yml>" "$STATUS" "$TITLE" "$MESSAGE" "$DESCRIPTION" "📦"
+          SOURCE="https://github.com/DhruviHiteshkumarSuthar/g20_fer/blob/main/.github/workflows/image_deployment.yml"
+          deployment/send_slack_notification.sh "<$SOURCE|image_deployment.yml>" "$STATUS" "$TITLE" "$MESSAGE" "$DESCRIPTION" "$EMOJI"
         shell: bash

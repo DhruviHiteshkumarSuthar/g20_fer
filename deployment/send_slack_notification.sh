@@ -27,4 +27,4 @@ curl -X POST -H 'Content-type: application/json' --data "{
     \"color\": \"$COLOR\",
     \"text\": \"$DETAILS\"
   }]
-}" https://hooks.slack.com/services/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
+}" https://hooks.slack.com/services/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

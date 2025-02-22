@@ -1,0 +1,55 @@
+- name: Deploy to AWS EC2
+  hosts: all
+  become: yes
+  vars:
+    host_port: "5000"
+    container_port: "5000"
+    fer_container: "fer_container"
+    fer_image: "dhruvi1624/fer_g20:latest"
+
+  tasks:
+    - name: Install Docker
+      apt:
+        name: docker.io
+        state: present
+        update_cache: yes
+
+    - name: Stop and remove old container if exists
+      docker_container:
+        name: "{{ fer_container }}"
+        state: absent
+        force_kill: yes
+
+    - name: Remove old image if exists
+      command: docker image rm -f "{{ fer_image }}"
+      ignore_errors: true  # In case the image doesn't exist, don't fail
+
+    - name: Pull latest Docker image from Docker Hub
+      command: docker pull "{{ fer_image }}"
+      register: pull_result
+
+    - name: Debug pull result
+      debug:
+        var: pull_result
+
+    - name: Start new Docker container with the latest image
+      docker_container:
+        name: "{{ fer_container }}"
+        image: "{{ fer_image }}"
+        state: started
+        ports:
+          - "{{ host_port }}:{{ container_port }}"
+        restart_policy: always
+
+    - name: Ensure Docker container is running
+      docker_container:
+        name: "{{ fer_container }}"
+        state: started
+
+    - name: Display running container details
+      command: docker ps --filter "name={{ fer_container }}"
+      register: container_status
+
+    - name: Debug container status
+      debug:
+        var: container_status.stdout
