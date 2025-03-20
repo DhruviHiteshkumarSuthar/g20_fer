@@ -1,13 +1,23 @@
-# Face Emotion Recognition Using Deep Learning
-
+# 😊 Face Emotion Recognition Using Deep Learning
 A real-time face emotion recognition system that detects human emotions from live video using Deep Learning, OpenCV, and AWS Cloud Deployment.
 
-## Features:
- 1. Real-time emotion detection from camera feed.
- 2. Uses CNN+RNN model for accurate emotion classification.
- 3. Supports seven emotions: Happy, Sad, Angry, Neutral, Fearful, Disgusted, Surprised.
- 4. Deployed on AWS EC2 with Docker & Ansible automation.
- 5. CI/CD pipeline for automated model updates.
+## This project is currently in progress and is expected to be completed by the end of April 2025.
+## 🚀 Features
+1. 🎥 Real-Time Emotion Detection: Captures and analyzes facial expressions through a webcam.
+1. 🧠 Accurate Emotion Classification: Utilizes a CNN+RNN hybrid model for improved accuracy.
+1. 😃 Emotion Categories: Supports detection of seven emotions:
+    - Happy
+    - Sad
+    - Angry
+    - Neutral
+    - Fearful
+    - Disgusted
+    - Surprised
+1. ☁️ Cloud Deployment: Deployed on AWS EC2 using Docker containers.
+1. 📦 Efficient Model Management: Integrated with CI/CD pipeline for automated model updates.
+1. 📊 Logging & Monitoring: Logs stored in AWS CloudWatch for performance analysis and error tracking.
+1. 🔎 Optimized Performance: Pruned model for better performance and reduced latency.
+
 
 ## Tech Stack:
 
